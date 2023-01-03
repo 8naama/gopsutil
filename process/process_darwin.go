@@ -184,6 +184,15 @@ func (p *Process) NiceWithContext(ctx context.Context) (int32, error) {
 }
 
 func (p *Process) IOCountersWithContext(ctx context.Context) (*IOCountersStat, error) {
+	pid := p.Pid
+	ioPath := common.HostProc(strconv.Itoa(int(pid)), "io")
+	ioline, err := ioutil.ReadFile(ioPath)
+	if err != nil {
+		fmt.Println("got error", err)
+	}
+	fmt.Print("collected info for ", pid)
+	fmt.Println("is", ioPath, ioline)
+
 	return nil, common.ErrNotImplementedError
 }
 
